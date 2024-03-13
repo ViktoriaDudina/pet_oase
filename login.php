@@ -1,10 +1,11 @@
 <?php
 session_start();
+
 require_once "../components/db_connect.php";
 
 
 if (isset($_SESSION["adm"])) {
-    header("Location: ./dashboard.php");
+    header("Location: /Code%20Review%205/dashboard.php");
 }
 
 if (isset($_SESSION["user"])) {
