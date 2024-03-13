@@ -1,7 +1,7 @@
 <?php
 
-require_once 'components/db_connect.php';
-require_once 'components/fileUpload.php';
+require_once './components/db_connect.php';
+require_once './components/fileUpload.php';
 
 if(isset($_POST["Create"])){
     $name = $_POST["name"];

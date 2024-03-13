@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once "components/db_connect.php";
+require_once "./components/db_connect.php";
 
 $sql = "SELECT * FROM `animals` WHERE age >= 8";
 $result = mysqli_query($connect, $sql);
@@ -12,7 +12,7 @@ if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         $cards .= "<div>
                 <div class='card' style='width: 18rem;'>
-                    <img src='assets/{$row['picture']}' class='card-img-top' alt='...'>
+                    <img src='assets/{$row['picture']}' class='card-img-top' alt='...' style='height: 350px; object-fit: cover; object-position: top;'>
                     <div class='card-body'>
                     <h5 class='card-title'>{$row['name']}</h5>
                     <p class='card-text'>Age: {$row['age']}</p>
@@ -21,11 +21,14 @@ if (mysqli_num_rows($result) > 0) {
                     <a href='details.php?pet_id={$row['pet_id']}' class='btn btn-primary'>Details</a>";
 
 
-        if ($row['status'] === "Available") {
+        if ($row['status'] === "Available" && isset($_SESSION['user'])) {
             $cards .= "<a href='adoption.php?pet_id={$row['pet_id']}&user_id={$_SESSION['user']}' class='btn btn-warning'>Take me home</a>";
+        } elseif ($row['status'] === "Available" && isset($_SESSION['adm'])) {
+            $cards .= "<a href='adoption.php?pet_id={$row['pet_id']}&user_id={$_SESSION['adm']}' class='btn btn-warning'>Take me home</a>";
         } elseif ($row['status'] === "Adopted") {
             $cards .= "<button class='btn btn-secondary' disabled>Adopted</button>";
         }
+
 
         $cards .= "</div>
                 </div>
@@ -40,10 +43,10 @@ mysqli_close($connect);
 
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Code Review 5</title>
 
@@ -58,32 +61,33 @@ mysqli_close($connect);
 
 
 <body>
-<?php require_once 'components/navbar.php'; ?>
+    <?php require_once 'components/navbar.php'; ?>
 
-<div id="intro-example" class="p-5 text-center">
-    <div class="mask " style="background-color: rgba(0, 0, 0, 0.7);">
-        <div class="d-flex justify-content-center align-items-center h-100 p-5">
-            <div class="text-white">
-                <h1 class="mb-3">Seniors</h1>
+    <div id="intro-example" class="p-5 text-center">
+        <div class="mask " style="background-color: rgba(0, 0, 0, 0.7);">
+            <div class="d-flex justify-content-center align-items-center h-100 p-5">
+                <div class="text-white">
+                    <h1 class="mb-3">Seniors</h1>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<div class="container">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 gx-5 gy-5">
-        <?= $cards; ?>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 gx-5 gy-5">
+            <?= $cards; ?>
+        </div>
     </div>
-</div>
 
 
 
 
 
 
-<?php require_once 'components/footer.php'; ?>
+    <?php require_once 'components/footer.php'; ?>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
+
 </html>

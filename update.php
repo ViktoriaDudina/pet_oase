@@ -1,7 +1,7 @@
 <?php
 
-require_once 'components/db_connect.php';
-require_once 'components/fileUpload.php';
+require_once './components/db_connect.php';
+require_once './components/fileUpload.php';
 
 if (isset($_GET["pet_id"]) && !empty($_GET["pet_id"])) {
     $pet_id = $_GET["pet_id"];

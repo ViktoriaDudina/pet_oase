@@ -1,5 +1,5 @@
 <?php
-require_once "../components/db_connect.php";
+require_once "./components/db_connect.php";
 
 $error = false;
 
@@ -148,7 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["sign-up"])) {
         </div>
         <button name="sign-up" type="submit" class="btn btn-primary">Create an account</button>
 
-        <span>Already have an account? <a href="user/login.php">Sign in here</a></span>
+        <span>Already have an account? <a href="/login.php">Sign in here</a></span>
     </form>
 </div>
 

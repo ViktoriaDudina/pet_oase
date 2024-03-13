@@ -1,25 +1,29 @@
 <?php
 
 session_start();
-if (isset($_SESSION['adm'])) {
-    header("Location: dashboard.php");
+
+if (!isset($_SESSION['user']) && !isset($_SESSION['adm'])) {
+    header("Location: ./login.php");
     exit;
 }
 
-if (!isset($_SESSION["user"]) && !isset($_SESSION["adm"])) {
-    header("Location: ./user/login.php");
-    exit;
-}
-
-if (isset($_SESSION["user"])) {
+if (isset($_SESSION['user'])) {
     header("Location: home.php");
     exit;
 }
 
-require_once "components/db_connect.php";
-$userId = $_SESSION["adm"];
+// Проверяем, что сессия админа есть, но нет сессии пользователя, иначе админ будет перенаправлен на dashboard.php
+// if (isset($_SESSION['adm']) && !isset($_SESSION['user'])) {
+//     header("Location: /Code%20Review%205/dashboard.php");
+//     exit;
+// }
 
-$sql = "SELECT * FROM user WHERE user_id = $user_id";
+
+
+require_once "./components/db_connect.php";
+$userId = $_SESSION['adm'];
+
+$sql = "SELECT * FROM users WHERE user_id = $userId";
 $result = mysqli_query($connect, $sql);
 
 if (!$result) {
@@ -29,7 +33,7 @@ if (!$result) {
 
 $row = mysqli_fetch_assoc($result);
 
-$sqlUsers = "SELECT * FROM user WHERE status != 'adm'";
+$sqlUsers = "SELECT * FROM users WHERE status != 'adm'";
 $resultUsers = mysqli_query($connect, $sqlUsers);
 
 if (!$resultUsers) {
@@ -80,12 +84,17 @@ if (mysqli_num_rows($resultUsers) > 0) {
             <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="index.php">Products</a>
             </li>
+
+<!--            ПРОВЕРИТЬ ПРАВИЛЬНОСТЬ ССЫЛОК!!!!!!-->
+
             <li class="nav-item">
                 <a class="nav-link" href="update_log.php?user_id=<?= $row["user_id"] ?>">edit</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="logout.php?logout">Logout</a>
             </li>
+
+
         </ul>
     </div>
 </nav>

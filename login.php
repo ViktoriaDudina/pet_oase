@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-require_once "../components/db_connect.php";
+require_once "./components/db_connect.php";
 
 
 if (isset($_SESSION["adm"])) {
-    header("Location: /Code%20Review%205/dashboard.php");
+    header("Location: ./dashboard.php");
 }
 
 if (isset($_SESSION["user"])) {
@@ -50,7 +50,7 @@ if (isset($_POST["login"])) {
             if ($row["status"] == "user") {
                 $_SESSION["user"] = $row["user_id"];
                 header("Location: ./home.php");
-            } else {
+            } else if ($row["status"] == "adm") {
                 $_SESSION["adm"] = $row["user_id"];
                 header("Location: ./dashboard.php");
             }

@@ -1,13 +1,14 @@
+
 <nav class="navbar navbar-expand-lg" style='background: pink;'>
     <div class="container-fluid">
-        <a class="navbar-brand" href="index.php"><img src='/assets/logo.png' alt='logo'>Pet Oasis</a>
+        <a class="navbar-brand" href="home.php"><img src='/assets/logo.png' alt='logo'>Pet Oasis</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                    <a class="nav-link active" aria-current="page" href="home.php">Home</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -20,31 +21,31 @@
                 </li>
             </ul>
             <ul class="navbar-nav">
-                <?php if ($_SESSION['adm']) {
+                <?php if (isset($_SESSION['adm'])) {
                     echo " <li class='nav-item'>
-          <a class='nav-link' href='./create.php'>Add a pet</a>
+          <a class='nav-link' href='/create.php'>Add a pet</a>
           </li>
           <li class='nav-item'>
-          <a class='nav-link active' aria-current='page' href='./dashboard.php'>Dashboard</a>
+          <a class='nav-link active' aria-current='page' href='/dashboard.php'>Dashboard</a>
         </li>
         <li class='nav-item'>
-          <a class='nav-link active' aria-current='page' href='../user/logout.php'>Log out</a>
+          <a class='nav-link active' aria-current='page' href='/logout.php'>Log out</a>
         </li>
           ";
-                } elseif ($_SESSION['user']) {
+                } elseif (isset($_SESSION['user'])) {
                     echo " <li class='nav-item'>
-          <a class='nav-link active' aria-current='page' href='../user/logout.php'>Log out</a>
+          <a class='nav-link active' aria-current='page' href='/logout.php'>Log out</a>
         </li>";
                 }
                 else {
                     echo "
           <li class='nav-item'>
-          <a class='nav-link active' aria-current='page' href='../user/login.php'>Login</a>
+          <a class='nav-link active' aria-current='page' href='/login.php'>Login</a>
         </li>
         <li class='nav-item'>
-          <a class='nav-link active' aria-current='page' href='../user/register.php'>Sign up</a>
+          <a class='nav-link active' aria-current='page' href='/register.php'>Sign up</a>
         </li>
-        "  ;
+        ";
                 }
                 ?>
             </ul>
